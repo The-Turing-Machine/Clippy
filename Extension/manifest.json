@@ -1,0 +1,25 @@
+{
+	"manifest_version": 2,
+
+	"name": "Clippy",
+	"version": "2.1.0",
+	"description": "Clippy",
+	"author": "Turing Machine",
+
+	"browser_action": {
+		"default_icon": "clippy.png"
+	},
+
+	"icons": {
+		"16": "clippy.png",
+		"48": "clippy.png",
+		"128": "clippy.png"
+	},
+
+	"background": {
+		"scripts": ["event.js"]
+	},
+
+	"permissions": ["activeTab","storage","http://*/*"],
+	"web_accessible_resources": ["template.html","jquery-1.11.2.min.js"]
+}
