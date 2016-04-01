@@ -44,25 +44,49 @@ position: absolute;
     width: 100%;
     height: 70%;
 }
-h2,p{
+h2{
     color:white;
         -webkit-transform: translate3d(0,30px,0);
     transform: translate3d(0,30px,0);
      -webkit-transition: opacity 0.35s, -webkit-transform 0.35s;
     transition: opacity 0.35s, transform 0.35s;
+    margin: 10px 0 0 10px;
+
+}
+p{
+    color:white;
+    opacity: 0.7;
+        -webkit-transform: translate3d(0,30px,0);
+    transform: translate3d(0,30px,0);
+     -webkit-transition: opacity 0.35s, -webkit-transform 0.35s;
+    transition: opacity 0.35s, transform 0.20s;
+    margin: 0 0 0 0;
+
 }
 .box:hover h2{
  
      -webkit-transform: translate3d(0,0, 0);
     transform: translate3d(0,0,0);
+    opacity: 1;
 
     
 }
 
+.box:hover p{
+ 
+     -webkit-transform: translate3d(0,0, 0);
+    transform: translate3d(0,0,0);
+    opacity: 1;
+
+    
+}
 .text{
     position: absolute;
 }
 
-p{position: absolute;}
+p{
 
+left:1%;
+    position: absolute;
+word-break: break-all }
 
