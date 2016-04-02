@@ -24,7 +24,7 @@ var injected = injected || (function() {
     Inspector.prototype = {
 
         getNodes: function() {
-            var path = chrome.extension.getURL("template.html");
+            var path = chrome.extension.getURL("static/template.html");
 
             var xmlhttp = new XMLHttpRequest();
 
