@@ -12,23 +12,26 @@ app = Flask(__name__)
 def hello():
     return "Hello World!"
 
-@app.route("/api/<user>/get_data")
+@app.route("/api/")
+def status():
+    pass
+
+@app.route("/api/<user>/get_data" , methods=['GET'])
 def store(user):
     try:
         return jsonify(json_data[user])
+    except KeyError:
+        return jsonify({'status':'Error','msg':'That username does not exist !!'})
     except Exception as e:
-        return jsonify({'status':'Error','msg':'user not present in database'})
+        return jsonify({'status':'Error','msg':'An exception has occured !!'})
+
 
 
 if __name__ == "__main__":
     global json_data
 
-    # json_data=open('data/database.json').read()
     with open("data/database.json") as json_file:
         json_data = json.load(json_file)
-        print type(json_data)
-        print '-------------'
-        print json_data['user1']['post1']
 
     port = int(os.environ.get('PORT', 5000))
     app.run(debug=True,host='0.0.0.0',port=port)
