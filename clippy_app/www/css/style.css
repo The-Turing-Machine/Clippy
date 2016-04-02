@@ -1,1 +1,33 @@
 /* Empty. Add your own CSS if you like */
+body{
+	background-color: black !important;
+}
+.head1{
+	margin-top: 50%;
+	
+	
+}
+h1{
+	 font-size: 3em;
+	 line-height: 1.25em;
+   	color: #fff;
+   	margin: 0 0 1em 0;
+   	font-family: 'Poiret One', cursive;
+}
+
+p{
+	font-size: 1.3em;
+	 line-height: 1.25em;
+   	color: #fff;
+   	margin: 0 0 0 0;
+   	font-family: 'Poiret One', cursive;
+}
+
+/* line-height: 1.25em;
+        color: #fff;
+    font-weight: 700;
+  
+    margin: 0 0 1em 0;*/
+
+
+
