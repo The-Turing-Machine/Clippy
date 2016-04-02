@@ -27,8 +27,8 @@ def recieve(user):
     except Exception as e:
         return jsonify({'status':'Error','msg':'An exception has occured !!'})
 
-@app.route('/api/post/<user>', methods=['POST'])
-def send():
+@app.route('/api/post/<user>', methods=['GET','POST'])
+def send(user):
     global json_data
 
     if request.method == 'POST':
