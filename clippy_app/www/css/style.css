@@ -54,5 +54,26 @@ button{
   
     margin: 0 0 1em 0;*/
 
+/*
+.foot{
+	color:white;
+	padding-left: 20%;
+}*/
+.bar-footer{
+	background-color: transparent;
+	height:10% !important;
+}
+.icon{
+	padding:0 35px 0 30px;
+	color:white;
+}
+
+.copyright{
+	color:white;
+
+}
+.copyright a{
+	color: white;
 
 
+}
