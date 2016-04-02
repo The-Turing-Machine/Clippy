@@ -10,14 +10,16 @@ app = Flask(__name__)
 
 @app.route("/")
 def hello():
-    return "Hello World!"
+    return jsonify({'status':'ok'})
 
 @app.route("/api/")
 def status():
-    pass
+    return jsonify({'status':'ok'})
 
-@app.route("/api/<user>/get_data" , methods=['GET'])
-def store(user):
+@app.route("/api/get/<user>" , methods=['GET'])
+def recieve(user):
+    global json_data
+
     try:
         return jsonify(json_data[user])
     except KeyError:
@@ -25,7 +27,14 @@ def store(user):
     except Exception as e:
         return jsonify({'status':'Error','msg':'An exception has occured !!'})
 
+@app.route('/api/post/<user>', methods=['POST'])
+def send():
+    global json_data
 
+    if request.method == 'POST':
+        pass
+    else:
+        pass
 
 if __name__ == "__main__":
     global json_data
