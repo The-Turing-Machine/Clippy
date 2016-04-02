@@ -19,7 +19,6 @@ def status():
 @app.route("/api/get/<user>" , methods=['GET'])
 def recieve(user):
     global json_data
-
     try:
         return jsonify(json_data[user])
     except KeyError:
@@ -30,7 +29,6 @@ def recieve(user):
 @app.route('/api/post/<user>', methods=['GET','POST'])
 def send(user):
     global json_data
-
     if request.method == 'POST':
         pass
     else:
