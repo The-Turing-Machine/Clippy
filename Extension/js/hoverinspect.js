@@ -1,12 +1,12 @@
 var injected = injected || (function() {
 
-    var user=prompt("Enter Your Username","Harry Potter");
-    var data, jsonArray,url;
+    var user = prompt("Enter Your Username", "Harry Potter");
+    var data, jsonArray, url;
     var lis = [],
         jsonlist = [];
     var i = 0;
 
-     var Inspector = function() {
+    var Inspector = function() {
         this.highlight = this.highlight.bind(this);
         this.log = this.log.bind(this);
         this.codeOutput = this.codeOutput.bind(this);
@@ -132,7 +132,7 @@ var injected = injected || (function() {
                 $.ajax({
                     type: 'POST',
                     url: 'https://appclippy.herokuapp.com/receive',
-                    data: JSON.stringify ({"userid": user,"url": url,"data":jsonArray}), // or JSON.stringify ({name: 'jonas'}),
+                    data: JSON.stringify({ "userid": user, "url": url, "data": jsonArray }), // or JSON.stringify ({name: 'jonas'}),
                     contentType: "application/json",
                     dataType: 'json'
                 });
@@ -247,9 +247,9 @@ var injected = injected || (function() {
 
     chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
         if (request.action === 'activate') {
-        //         notie.input('Please enter your Username:', 'Submit', 'Cancel', 'email', 'Jhon1234', function(value_entered) {
-        //             notie.alert(1, 'You entered: ' + value_entered, 2);
-        //         });
+            //         notie.input('Please enter your Username:', 'Submit', 'Cancel', 'email', 'Jhon1234', function(value_entered) {
+            //             notie.alert(1, 'You entered: ' + value_entered, 2);
+            //         });
             return hi.activate();
         } else {
             lis = [];
