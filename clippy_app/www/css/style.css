@@ -85,3 +85,36 @@ button{
 
 
 }
+
+/* Empty. Add your own CSS if you like */
+ion-content{
+	background-color: black !important;
+	color:white;
+}
+
+
+.card.list{
+	border: 2px solid #40d47e;
+	background-color: black !important;
+}
+.item-input-inset{
+	background-color: #2c3e50;
+}
+/*.full{
+	max-width:100% !important;
+	max-height:10% !important;
+}
+*/
+h2{
+	color: #40d47e;
+}
+p{
+	color: #bdc3c7 !important;
+}
+.item-avatar-left,.item.item-body{
+	border-top:2px solid #40d47e;
+	
+	background-color: black !important;
+}
+
+

@@ -11,8 +11,10 @@ App.config(['$routeProvider', function($routeProvider) {
                 controller: "AppCtrl"
             })
             .when('/login', {
-                templateUrl: "login.html",
+                /*templateUrl: "login.html",*/
+                template:"<h1>wwrwwweewee</h1>",
                 controller: "home"
+
             })
           }])
 App.service("imdb",["$http","$log",imdb]);
@@ -73,8 +75,10 @@ function AppCtrl($scope,$log,imdb,$location){
   $scope.refresh = function(d){
     console.log(d);
   /*  $location.path("/login"); */
-    $location.url('#/login')
-    $location.reload();
+    /*$location.url('#/login')*/
+   /* window.location = "http://192.168.43.87:8100/#/login.html";*/
+   $(location).attr("href","/login.html")
+   /* $location.reload();*/
   imdb.getmovie($scope,d);
 
 /*scope.$apply(function() { $location.path("/login"); });*/
