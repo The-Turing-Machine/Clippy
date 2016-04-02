@@ -103,7 +103,7 @@ var injected = injected || (function() {
 
             function handle() {
                 handler1();
-                handler2();
+                //handler2();
             }
 
             function handler1(e) {
@@ -184,11 +184,11 @@ var injected = injected || (function() {
 
             var x, y, width, height;
 
-            // // margin
-            // x = box.left - box.margin.left;
-            // y = box.top - box.margin.top;
-            // width = box.width + box.margin.left + box.margin.right;
-            // height = box.height + box.margin.top + box.margin.bottom + 5;
+            //margin
+            // x = box.left + box.margin.left;
+            // y = box.top + box.margin.top;
+            // width = box.width + box.margin.left + box.margin.right + 50;
+            // height = box.height + box.margin.top + box.margin.bottom + 50;
 
             // c.fillStyle = 'rgba(255, 220, 232, 0.5)';
             // c.fillRect(x, y, width, height);
@@ -199,7 +199,7 @@ var injected = injected || (function() {
             width = box.width + 3;
             height = box.height + 3;
 
-            c.fillStyle = 'rgba(185, 1, 62, 0.7)';
+            c.fillStyle = 'rgba(0, 77, 64, 0.8)';
             //c.clearRect(x, y, width, height);
             c.fillRect(x, y, width, height);
 
@@ -209,7 +209,7 @@ var injected = injected || (function() {
             width = box.width + 2;
             height = box.height + 2;
 
-            c.fillStyle = 'rgba(254, 34, 107, 0.4)';
+            c.fillStyle = 'rgba(0, 150, 136, 0.4)';
             c.clearRect(x, y, width, height);
             c.fillRect(x, y, width, height);
 
@@ -247,9 +247,6 @@ var injected = injected || (function() {
 
     chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
         if (request.action === 'activate') {
-            //         notie.input('Please enter your Username:', 'Submit', 'Cancel', 'email', 'Jhon1234', function(value_entered) {
-            //             notie.alert(1, 'You entered: ' + value_entered, 2);
-            //         });
             return hi.activate();
         } else {
             lis = [];
