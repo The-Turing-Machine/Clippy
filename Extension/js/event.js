@@ -8,10 +8,10 @@
 
             this.id = id;
             chrome.tabs.executeScript(this.id, {
-                file: 'prism.js'
+                file: 'js/prism.js'
             });
             chrome.tabs.executeScript(this.id, {
-                file: 'hoverinspect.js'
+                file: 'js/hoverinspect.js'
             }, function() {
                 chrome.tabs.sendMessage(this.id, {
                     action: 'activate'
@@ -21,7 +21,7 @@
             chrome.browserAction.setIcon({
                 tabId: this.id,
                 path: {
-                    19: "clippy.png"
+                    19: "Images/clippy.png"
                 }
             });
         },
@@ -35,7 +35,7 @@
             chrome.browserAction.setIcon({
                 tabId: this.id,
                 path: {
-                    19: "clippy.png"
+                    19: "Images/clippy.png"
                 }
             });
         }
