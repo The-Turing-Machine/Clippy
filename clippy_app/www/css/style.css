@@ -24,8 +24,10 @@ p{
 }
 
 label{
-	margin-right: %;
+	/*margin-right: %;*/
 	height:20%;
+	background-color:rgba(0,0,0,0) !important;
+	border: 1px solid #fff;
 
 }
 div .item-input-inset{
@@ -36,15 +38,15 @@ div .item-input-inset{
 }
 input{
 	height:40px !important;
-	background-color:rgba(0, 0, 0, 0);
+		border:2px solid white;
 }
 button{
-	  line-height: 35px !important;
+	  line-height: 38px !important;
     width: 15%;
  	 	font-family: 'Poiret One', cursive;   
  	 	color:#fff;
  	 	font-weight: 700;
- 	 	
+
 }
 /* line-height: 1.25em;
         color: #fff;
