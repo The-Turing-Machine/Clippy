@@ -19,10 +19,33 @@ p{
 	font-size: 1.3em;
 	 line-height: 1.25em;
    	color: #fff;
-   	margin: 0 0 0 0;
+   	margin: 0 0 7%  0;
    	font-family: 'Poiret One', cursive;
 }
 
+label{
+	margin-right: %;
+	height:20%;
+
+}
+div .item-input-inset{
+/*	margin-left: 5%;*/
+	/*margin-right: 5%;*/
+	background-color: black;
+	border:hidden;
+}
+input{
+	height:40px !important;
+	background-color:rgba(0, 0, 0, 0);
+}
+button{
+	  line-height: 35px !important;
+    width: 15%;
+ 	 	font-family: 'Poiret One', cursive;   
+ 	 	color:#fff;
+ 	 	font-weight: 700;
+ 	 	
+}
 /* line-height: 1.25em;
         color: #fff;
     font-weight: 700;
