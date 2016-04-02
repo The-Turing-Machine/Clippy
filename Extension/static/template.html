@@ -1,0 +1,26 @@
+<template class='tl-template'>
+    <style>
+    .tl-wrap {
+        pointer-events: none;
+        position: fixed;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        z-index: 10000001;
+    }
+    
+    .tl-wrap.-out {
+        -webkit-animation: 0.5s tl-hide forwards !important;
+        animation: 0.5s tl-hide forwards !important;
+    }
+    
+    .tl-wrap.-out .tl-canvas {
+        transition: opacity 0.3s;
+        opacity: 0;
+    }
+    </style>
+    <div class="tl-wrap">
+        <canvas width='100' height='100' id='tl-canvas' class='tl-canvas'></canvas>
+    </div>
+</template>
