@@ -1,9 +1,10 @@
 /* Empty. Add your own CSS if you like */
 body{
 	background-color: black !important;
+	overflow: hidden;
 }
 .head1{
-	margin-top: 50%;
+	padding-top: 50%;
 	
 	
 }
@@ -35,10 +36,17 @@ div .item-input-inset{
 	/*margin-right: 5%;*/
 	background-color: black;
 	border:hidden;
+	color: rgba(255, 255, 255, 0.75);
+	font-family: 'Poiret One', cursive;
+
+
 }
 input{
 	height:40px !important;
 		border:2px solid white;
+
+		color: white !important;
+
 }
 button{
 	  line-height: 38px !important;
@@ -61,7 +69,7 @@ button{
 }*/
 .bar-footer{
 	background-color: transparent;
-	height:10% !important;
+	height:13% !important;
 }
 .icon{
 	padding:0 35px 0 30px;

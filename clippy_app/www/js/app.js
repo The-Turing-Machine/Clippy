@@ -3,8 +3,18 @@
 // angular.module is a global place for creating, registering and retrieving Angular modules
 // 'starter' is the name of this angular module example (also set in a <body> attribute in index.html)
 // the 2nd parameter is an array of 'requires'
-var App = angular.module('starter', ['ionic']);
-
+var App = angular.module('starter', ['ionic','ngRoute']);
+App.config(['$routeProvider', function($routeProvider) {    
+        $routeProvider
+            .when('/', {              
+                templateUrl: "index.html",
+                controller: "AppCtrl"
+            })
+            .when('/login', {
+                templateUrl: "login.html",
+                controller: "home"
+            })
+          }])
 App.service("imdb",["$http","$log",imdb]);
 angular.module('services', [])
 .service('UserService', function() {
@@ -25,7 +35,9 @@ angular.module('services', [])
 });
 
 
-App.controller("AppCtrl",["$scope","$log","imdb",AppCtrl]);
+App.controller("AppCtrl",["$scope","$log","imdb","$location",AppCtrl]);
+
+App.controller("home",["$scope","$log","$location",home]);
 
 /*function AppCtrl($scope,$log,imdb){
 
@@ -52,15 +64,21 @@ App.controller("AppCtrl",["$scope","$log","imdb",AppCtrl]);
     });
   };
 }*/
-
-function AppCtrl($scope,$log,imdb){
+function home($scope,$log,$location){
+  console.log("asa");
+}
+function AppCtrl($scope,$log,imdb,$location){
 
   $scope.data = [];
   $scope.refresh = function(d){
     console.log(d);
-    var d = (d.split(" ")).join("+") ;
-       console.log(d);
+  /*  $location.path("/login"); */
+    $location.url('#/login')
+    $location.reload();
   imdb.getmovie($scope,d);
+
+/*scope.$apply(function() { $location.path("/login"); });*/
+
 
 }
 
@@ -69,21 +87,33 @@ function AppCtrl($scope,$log,imdb){
 
 function imdb($http,$log){
   d = []
-  this.getmovie = function($scope,d){
-    $http.jsonp("http://api.themoviedb.org/3/search/movie?api_key=d40f8d561eedf9402a64cfb304c27dc1&query="+d+"&callback=JSON_CALLBACK")
+/*  this.getmovie = function($scope,d){
+    $http.jsonp("http://192.168.43.106:5000/api/get/user1")
     .success(function(result){
       
-      for(var i=0;i<result.results.length;i++)
-      {
-        result.results[i]["poster_path"] = "http://image.tmdb.org/t/p/w500" + result.results[i]["poster_path"]
-      }
-      $scope.data = result.results;
-      
-      $scope.$broadcast("scroll.refreshComplete");
-      $log.info(JSON.stringify(result.results));
+
+
+     $log.info("sdfsds");
+      $log.info(JSON.stringify(result));
 
     });
-  };
+
+
+  };*/
+
+ this.getmovie= function(){$http({
+  method: 'GET',
+  url: 'https://192.168.43.106:5000/api/get/user1'
+}).then(function successCallback(response) {
+    // this callback will be called asynchronously
+    // when the response is available
+    console.log(response);
+  }, function errorCallback(response) {
+    // called asynchronously if an error occurs
+    // or server returns response with an error status.
+    console.log("fail");
+  });
+}
 
 
 }
