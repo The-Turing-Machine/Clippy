@@ -3,12 +3,30 @@ from flask.ext.login import LoginManager, UserMixin, login_required
 import requests
 import json
 import os
+from flask.ext.cors import CORS
 json_data = {}
 
+from OpenSSL import SSL
+
+# from werkzeug.serving import make_ssl_devcert
+# make_ssl_devcert('key', host='localhost')
+
+# context = SSL.Context(SSL.SSLv23_METHOD)
+# context.use_privatekey_file('key.key')
+# context.use_certificate_file('key.crt')
 
 app = Flask(__name__)
+CORS(app)
 login_manager = LoginManager()
 login_manager.init_app(app)
+
+@app.after_request
+def after_request(response):
+  response.headers.add('Access-Control-Allow-Origin', '*')
+  response.headers.add('Access-Control-Allow-Headers', 'Content-Type,Authorization')
+  response.headers.add('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE')
+  return response
+
 
 class User(UserMixin):
     # user_database = json_data
@@ -48,7 +66,7 @@ def hello():
 def status():
     return jsonify({'status':'ok'})
 
-@app.route("/api/get/<user>" , methods=['GET'])
+@app.route("/api/get/<user>/" , methods=['GET'])
 def recieve(user):
     global json_data
     try:
@@ -58,13 +76,27 @@ def recieve(user):
     except Exception as e:
         return jsonify({'status':'Error','msg':'An exception has occured !!'})
 
-@app.route('/api/post/<user>', methods=['GET','POST'])
-def send(user):
+@app.route('/api/post/', methods=['GET','POST'])
+def send():
     global json_data
+    print request.form
+    print '----------------'
+    print 'faltu'
+    print '----------------'
     if request.method == 'POST':
-        pass
+        print request.form
+        print '----------------'
+        print 'POST !!!!!!!!!!!!!!!'
+        print '----------------'
+        return jsonify({'status':'ok'})
     else:
         pass
+    @app.after_request
+    def after_request(response):
+      response.headers.add('Access-Control-Allow-Origin', '*')
+      response.headers.add('Access-Control-Allow-Headers', 'Content-Type,Authorization')
+      response.headers.add('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE')
+      return response
 
 if __name__ == "__main__":
     global json_data
@@ -73,4 +105,4 @@ if __name__ == "__main__":
         json_data = json.load(json_file)
 
     port = int(os.environ.get('PORT', 5000))
-    app.run(debug=True,host='0.0.0.0',port=port)
+    app.run(debug=True,port=port,host='0.0.0.0',ssl_context=('key.crt','key.key'))
