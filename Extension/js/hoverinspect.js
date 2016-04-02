@@ -118,6 +118,7 @@ var injected = injected || (function() {
                     i++;
                     //alert('Exec!');
                     jsonArray = JSON.parse(JSON.stringify(jsonlist));
+                    console.log(Date());
                     console.log(url);
                     console.log(user);
                     console.log(jsonArray);
