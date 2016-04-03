@@ -1,7 +1,7 @@
 var injected = injected || (function() {
 
-    var user = prompt("Enter Your Username", "Harry Potter");
-    var data, jsonArray, url;
+    var user = prompt("Enter Your Username", "user1");
+    var data, jsonArray, url, count=0;
     var lis = [],
         jsonlist = [];
     var i = 0;
@@ -103,7 +103,10 @@ var injected = injected || (function() {
 
             function handle() {
                 handler1();
-            }
+                count=count+1;
+                if(count==1)
+                    handler2();
+             }
 
             function handler1(e) {
                 //if($(this).)
@@ -132,8 +135,8 @@ var injected = injected || (function() {
                 console.log(url);
                 $.ajax({
                     type: 'POST',
-                    url: 'https://192.168.43.106:5000/api/post/', //+ JSON.stringify({ "userid": user, "url": url, "data": jsonArray }),
-                    data: JSON.stringify({ "userid": user, "url": url, "data": jsonArray }), // or JSON.stringify ({name: 'jonas'}),
+                    url: 'https://192.168.43.106:5000/api/post/',
+                    data: JSON.stringify({ "userid": user, "url": url, "date":Date(), "data": jsonArray  }), // or JSON.stringify ({name: 'jonas'}),
                     contentType: "application/json",
                     dataType: 'json'
                 });
@@ -252,6 +255,7 @@ var injected = injected || (function() {
         } else {
             lis = [];
             jsonlist = [];
+            count=0;
             return hi.deactivate();
         }
     });
