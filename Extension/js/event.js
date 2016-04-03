@@ -8,6 +8,9 @@
 
             this.id = id;
             chrome.tabs.executeScript(this.id, {
+                file: 'js/jquery-1.11.2.min.js'
+            });
+            chrome.tabs.executeScript(this.id, {
                 file: 'js/prism.js'
             });
             chrome.tabs.executeScript(this.id, {

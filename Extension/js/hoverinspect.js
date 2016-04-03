@@ -103,7 +103,7 @@ var injected = injected || (function() {
 
             function handle() {
                 handler1();
-                //handler2();
+                handler2();
             }
 
             function handler1(e) {
@@ -118,10 +118,10 @@ var injected = injected || (function() {
                     i++;
                     //alert('Exec!');
                     jsonArray = JSON.parse(JSON.stringify(jsonlist));
-                    console.log(Date());
-                    console.log(url);
-                    console.log(user);
-                    console.log(jsonArray);
+                    // console.log(Date());
+                    // console.log(url);
+                    // console.log(user);
+                    // console.log(jsonArray);
 
                     event.handled = true;
 
@@ -130,9 +130,10 @@ var injected = injected || (function() {
             }
 
             function handler2(e) {
+                console.log(url);
                 $.ajax({
                     type: 'POST',
-                    url: 'https://appclippy.herokuapp.com/receive',
+                    url: 'https://192.168.43.106:5000/api/post/', //+ JSON.stringify({ "userid": user, "url": url, "data": jsonArray }),
                     data: JSON.stringify({ "userid": user, "url": url, "data": jsonArray }), // or JSON.stringify ({name: 'jonas'}),
                     contentType: "application/json",
                     dataType: 'json'
