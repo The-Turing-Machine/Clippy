@@ -2,23 +2,6 @@
 <html data-ng-app="starter">
 
 <head>
-<!-- Good default declaration:
-    * gap: is required only on iOS (when using UIWebView) and is needed for JS->native communication
-    * https://ssl.gstatic.com is required only on Android and is needed for TalkBack to function properly
-    * Disables use of eval() and inline scripts in order to mitigate risk of XSS vulnerabilities. To change this:
-        * Enable inline JS: add 'unsafe-inline' to default-src
-        * Enable eval(): add 'unsafe-eval' to default-src
--->
-<meta http-equiv="Content-Security-Policy" content="default-src 'self' data: gap: https://ssl.gstatic.com; style-src 'self' 'unsafe-inline'; media-src *">
-
-<!-- Allow everything but only from the same origin and foo.com -->
-<meta http-equiv="Content-Security-Policy" content="default-src 'self' http://*/*">
-
-
-
-<!-- Allows XHRs only over HTTPS on the same domain. -->
-<!-- <meta http-equiv="Content-Security-Policy" content="default-src 'self' https:">
- -->
 
     <meta charset="utf-8">
     <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
@@ -33,27 +16,27 @@
     <!-- cordova script (this will be a 404 during development) -->
     <script src="cordova.js"></script>
     <!-- your app's js -->
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.7/angular-route.js"></script>
     <script src="js/app.js"></script>
 </head>
 
-<body data-ng-controller="home">
+<body data-ng-controller="AppCtrl">
 <ion-content>
-                <div class="card list" >
+                <div class="card list" data-ng-repeat="a in data">
                     <div class="item item-avatar-left">
                         <img alt="">
-                        <h2></h2>
-                        <p>dfsdf</p>
+                        <h1>Snippet</h1>
+                        <p>{{a.post4["date"]}}</p>
                     </div>
                     <div class="item item-body">
-                        <!--  <img  data-ng-src={{a.poster_path}} class="full-image"> -->
-                        <p>sdfs
+                        
                         <p>
-                       sdfsdf                        </p>
+                        {{a.post4["data"][0]}}
+                        </p>
                         <hr style="margin:0 2px 0 2px">
                         <p>
-                            <a href="#" class="subdued">Popularitysdfsfsf</a>
-                            <a href="#" class="subdued">Vote-count sdfsda>
-                            <a href="#" class="subdued">Vote-average sdfsdsd</a>
+                           
+                            <a href="{{a.post4["url"]}}" class="subdued">{{a.post4["url"]}}</a>
                         </p>
                     </div>
                 </div>

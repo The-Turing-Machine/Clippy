@@ -1,7 +1,7 @@
 /* Empty. Add your own CSS if you like */
 body{
 	background-color: black !important;
-	overflow: hidden;
+	/*overflow: hidden;*/
 }
 .head1{
 	padding-top: 50%;
@@ -96,6 +96,7 @@ ion-content{
 .card.list{
 	border: 2px solid #40d47e;
 	background-color: black !important;
+	
 }
 .item-input-inset{
 	background-color: #2c3e50;

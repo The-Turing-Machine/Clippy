@@ -19,10 +19,10 @@
 
     <!-- cordova script (this will be a 404 during development) -->
     <script src="cordova.js"></script>
-
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.7/angular-route.js"></script>
     <!-- your app's js -->
     <script src="js/app.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.7/angular-route.js"></script>
+    
 
   </head>
 
@@ -32,6 +32,7 @@
   <body data-ng-controller="AppCtrl" style="overflow-y: hidden;">
 
 <ion-content >
+
   <div class="head1">
   <center><h1>Clippy</h1></center>
   <center><p>A smart way to store, manage and customize your bookmarks quite precisely.</p></center>
@@ -50,6 +51,27 @@
 
 
 
+
+
+
+  <div class="card list" data-ng-repeat="a in data">
+                    <div class="item item-avatar-left">
+                        <img alt="">
+                        <h2>Snippet</h2>
+                        <p>{{a.post4["date"]}}</p>
+                    </div>
+                    <div class="item item-body">
+                        
+                        <p>
+                        {{a.post4["data"][0]}}
+                        </p>
+                        <hr style="margin:0 2px 0 2px">
+                        <p>
+                           
+                            <a href="{{a.post4["url"]}}" class="subdued">{{a.post4["url"]}}</a>
+                        </p>
+                    </div>
+                </div>
 </ion-content>
 
 

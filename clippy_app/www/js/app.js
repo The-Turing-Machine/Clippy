@@ -11,9 +11,9 @@ App.config(['$routeProvider', function($routeProvider) {
                 controller: "AppCtrl"
             })
             .when('/login', {
-                /*templateUrl: "login.html",*/
-                template:"<h1>wwrwwweewee</h1>",
-                controller: "home"
+                templateUrl: "login.html",
+               
+                controller: "AppCtrl"
 
             })
           }])
@@ -39,7 +39,7 @@ angular.module('services', [])
 
 App.controller("AppCtrl",["$scope","$log","imdb","$location",AppCtrl]);
 
-App.controller("home",["$scope","$log","$location",home]);
+App.controller("home_new",["$scope","$log","$location","imdb",home_new]);
 
 /*function AppCtrl($scope,$log,imdb){
 
@@ -66,21 +66,24 @@ App.controller("home",["$scope","$log","$location",home]);
     });
   };
 }*/
-function home($scope,$log,$location){
-  console.log("asa");
-}
+
 function AppCtrl($scope,$log,imdb,$location){
 
   $scope.data = [];
+
   $scope.refresh = function(d){
     console.log(d);
   /*  $location.path("/login"); */
     /*$location.url('#/login')*/
    /* window.location = "http://192.168.43.87:8100/#/login.html";*/
-   $(location).attr("href","/login.html")
-   /* $location.reload();*/
-  imdb.getmovie($scope,d);
 
+   /* $location.reload();*/
+   console.log($scope.data)
+
+  imdb.getmovie($scope,d);
+    $("form").css("display",None);
+  console.log("i m here");
+ 
 /*scope.$apply(function() { $location.path("/login"); });*/
 
 
@@ -89,7 +92,7 @@ function AppCtrl($scope,$log,imdb,$location){
 }
 
 
-function imdb($http,$log){
+function imdb($http,$log,$scope){
   d = []
 /*  this.getmovie = function($scope,d){
     $http.jsonp("http://192.168.43.106:5000/api/get/user1")
@@ -105,13 +108,21 @@ function imdb($http,$log){
 
   };*/
 
- this.getmovie= function(){$http({
+ this.getmovie= function($scope){$http({
   method: 'GET',
   url: 'https://192.168.43.106:5000/api/get/user1'
 }).then(function successCallback(response) {
     // this callback will be called asynchronously
     // when the response is available
+
     console.log(response);
+    console.log(response["data"])
+    d.push(response["data"]);
+      $scope.data = d;
+          console.log($scope.data)
+       /* home.get_data($scope,d);*/
+       home_new(d,$scope);
+      /*$(location).attr("href","/login.html");*/
   }, function errorCallback(response) {
     // called asynchronously if an error occurs
     // or server returns response with an error status.
@@ -123,6 +134,16 @@ function imdb($http,$log){
 }
 
 
+function home_new(d,$scope,$log,$location){
+  console.log("asa");
+  $scope.final = []
+
+    $scope.final = d;
+
+    console.log( $scope.final);
+
+
+  }
 
 
 
