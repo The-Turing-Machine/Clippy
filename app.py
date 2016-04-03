@@ -75,20 +75,29 @@ def recieve(user):
     except KeyError:
         return jsonify({'status':'Error','msg':'That username does not exist !!'})
     except Exception as e:
-        return jsonify({'status':'Error','msg':'An exception has occured !!'})
+        return jsonify({'status':'Error','msg':'An exception has occured !! - ' + e.message})
 
 @app.route('/api/post/', methods=['GET','POST'])
 def send():
     global json_data
-    print request.form
-    print '----------------'
-    print 'faltu'
-    print '----------------'
+    # print json_data
+    # print request.form
+    # print '----------------'
+    # print 'faltu'
+    # print '----------------'
     if request.method == 'POST':
-        print request.form
-        print '----------------'
-        print 'POST !!!!!!!!!!!!!!!'
-        print '----------------'
+        tempdata = json.loads(request.data)
+        # print tempdata
+        # print json_data
+        if tempdata['userid'] not in json_data:
+            print 'error'
+            return jsonify({'status':'Error','msg':'That username does not exist !!'})
+        json_data[tempdata['userid']] = {'post4':tempdata}
+        # json.dump(json_data[tempdata['userid']],{'post4':tempdata})
+        # print '----------------'
+        # print 'POST !!!!!!!!!!!!!!!'
+        # print '----------------'
+        print json_data
         return jsonify({'status':'ok'})
     else:
         pass
