@@ -92,6 +92,7 @@
 
         }
 
+
         // Main loop.
         $bgs[pos].classList.add('visible');
         $bgs[pos].classList.add('top');
@@ -192,3 +193,14 @@
     })();
 
 })();
+$.getJSON( "https://192.168.43.106:5000/api/get/user1/", function( data ) {
+  var items = [];
+  $.each( data, function( key, val ) {
+    items.push( "<li id='" + key + "'>" + val + "</li>" );
+  });
+ 
+  $( "<ul/>", {
+    "class": "my-new-list",
+    html: items.join( "" )
+  }).appendTo( "body" );
+});

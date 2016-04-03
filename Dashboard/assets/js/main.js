@@ -1,9 +1,3 @@
-/*
-	Phantom by HTML5 UP
-	html5up.net | @n33co
-	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
-*/
-
 (function($) {
 
 	skel.breakpoints({
@@ -196,5 +190,14 @@
 				});
 
 	});
+	// console.log('asdasdasda')
+	$.ajax({
+        url: 'https://192.168.43.106:5000/api/get/user1/',
+        success: function(result){
+        	console.log(JSON.stringify(result));
+            // $('.post').html(JSON.stringify(result));
+            $('.post').html(result['post4']['data']);
+        }
+    });
 
 })(jQuery);
