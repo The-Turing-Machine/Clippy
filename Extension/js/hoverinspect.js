@@ -103,7 +103,6 @@ var injected = injected || (function() {
 
             function handle() {
                 handler1();
-                handler2();
             }
 
             function handler1(e) {
