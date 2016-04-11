@@ -9,7 +9,9 @@ Building a user-friendly bookmark manager that allow us to select and save only 
 
 ###Team Members
 [Ayush Singh](https://github.com/ayush1997/)
+
 [Arsh](https://github.com/arsh23/)
+
 [Ashish Gupta](https://github.com/thinker3197/)
 
 
