@@ -1,5 +1,6 @@
 #Clippy
 #### A smart bookmarking service for the web
+#####Hackathon project at IIIT Allahabad
 -----------
 ![alt tag](https://raw.githubusercontent.com/The-Turing-Machine/Clippy/gh-pages/Dashboard/images/screenshot.png)
 -----------
