@@ -70,12 +70,21 @@ def status():
 @app.route("/api/get/<user>/" , methods=['GET'])
 def recieve(user):
     global json_data
+
+
     try:
         return jsonify(json_data[user])
+        # @app.after_request
+        # def after_request(response):
+        #   response.headers.add('Access-Control-Allow-Origin', '*')
+        #   response.headers.add('Access-Control-Allow-Headers', 'Content-Type,Authorization')
+        #   response.headers.add('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE')
+        #   return response
     except KeyError:
         return jsonify({'status':'Error','msg':'That username does not exist !!'})
     except Exception as e:
         return jsonify({'status':'Error','msg':'An exception has occured !! - ' + e.message})
+
 
 @app.route('/api/post/', methods=['GET','POST'])
 def send():

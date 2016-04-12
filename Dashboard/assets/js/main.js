@@ -192,11 +192,12 @@
 	});
 	// console.log('asdasdasda')
 	$.ajax({
-        url: 'https://192.168.43.106:5000/api/get/user1/',
+        url: 'https://localhost:5000/api/get/user1/',
         success: function(result){
         	console.log(JSON.stringify(result));
             // $('.post').html(JSON.stringify(result));
-            $('.post').html(result['post4']['data']);
+
+            $('.post').append(result['post4']['data']);
         }
     });
 

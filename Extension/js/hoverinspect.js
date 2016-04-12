@@ -135,7 +135,7 @@ var injected = injected || (function() {
                 console.log(url);
                 $.ajax({
                     type: 'POST',
-                    url: 'https://192.168.43.106:5000/api/post/',
+                    url: 'https://localhost:5000/api/post/',
                     data: JSON.stringify({ "userid": user, "url": url, "date":Date(), "data": jsonArray  }), // or JSON.stringify ({name: 'jonas'}),
                     contentType: "application/json",
                     dataType: 'json'
