@@ -1,5 +1,5 @@
 from flask import Flask, request, session, g, redirect, url_for, render_template, jsonify
-from flask.ext.login import LoginManager, UserMixin, login_required
+from flask.ext.login import LoginManager, UserMixin, login_required, current_user
 import requests
 import json
 import os
@@ -16,8 +16,6 @@ from OpenSSL import SSL
 # context = SSL.Context(SSL.SSLv23_METHOD)
 # context.use_privatekey_file('key.key')
 # context.use_certificate_file('key.crt')
-
-
 
 
 def connect():
@@ -38,15 +36,22 @@ db = connect()
 
 
 class User(UserMixin):
-    #edit this
-    user_database = {"admin": ("admin", "1234"),"user1": ("user1", "abcd")}
-    def __init__(self, username, password):
-        self.id = username
-        self.password = password
-    @classmethod
-    def get(cls,id):
-        return cls.user_database.get(id)
+    def __init__(self, username):
+        data = db.collection.find({"user": username})[0]
+        self.user = data['user']
+        self.password = data['password']
+        self.data = data['data']
 
+    @classmethod
+    def get(cls,uid):
+        # return cls.user_database.get(id)
+        if db.collection.find({"user": uid}).limit(1).count() == 0:
+            #user does not exist
+            return None
+
+        else:
+            #return user's data
+            return db.collection.find({"user": uid})[0]
 
 @login_manager.request_loader
 def load_user(request):
@@ -59,9 +64,11 @@ def load_user(request):
         username,password = token.split(":") #edit this
         user_entry = User.get(username)
         if (user_entry is not None):
-            user = User(user_entry[0],user_entry[1])
+            user = User(user_entry['user'])
+            # print user.username
             if (user.password == password):
                 return user
+            # return user_entry
     return None
 
 
@@ -75,7 +82,8 @@ def hello():
 @login_required
 def status():
     #can be used to check login status
-    return jsonify({'status':'ok'})
+    # return jsonify({'status':user})
+    return current_user.user
 
 #----------------------------------------------------------------------------------------------------
 
