@@ -44,14 +44,9 @@ class User(UserMixin):
 
     @classmethod
     def get(cls,uid):
-        # return cls.user_database.get(id)
-        if db.collection.find({"user": uid}).limit(1).count() == 0:
-            #user does not exist
-            return None
-
-        else:
-            #return user's data
+        if db.collection.find({"user": uid}).limit(1).count() != 0:
             return db.collection.find({"user": uid})[0]
+
 
 @login_manager.request_loader
 def load_user(request):
@@ -91,25 +86,15 @@ def status():
 
 # endpoint for retriving user data from db
 #----------------------------------------------------------------------------------------------------
-@app.route("/api/get/<user>/" , methods=['GET'])
-def recieve(user):
+@app.route("/api/get-user-data" , methods=['GET'])
+@login_required
+def recieve():
     #retrive specific user data from cloud db
+    return jsonify({
+        'user' : current_user.user,
+        'data' : current_user.data
+    })
 
-    try:
-
-        if db.collection.find({"user": user}).limit(1).count() == 0:
-            #user does not exist
-            return jsonify({'status':'Error','msg':'That username does not exist !!'})
-
-        else:
-            #return user's data
-            return jsonify({
-                'user' : db.collection.find({"user": user})[0]['user'],
-                'data' : db.collection.find({"user": user})[0]['data']
-            })
-
-    except Exception as e:
-        return jsonify({'status':'Error','msg':'An exception has occured !! - ' + e.message})
 #----------------------------------------------------------------------------------------------------
 
 
