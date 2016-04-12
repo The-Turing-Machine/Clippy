@@ -4,6 +4,11 @@ import requests
 import json
 import os
 from flask.ext.cors import CORS
+
+
+from pymongo import MongoClient
+
+
 json_data = {}
 
 from OpenSSL import SSL
@@ -16,10 +21,24 @@ from OpenSSL import SSL
 # context.use_certificate_file('key.crt')
 
 
+
+
+def connect():
+    # Temporary !!
+    connection = MongoClient("ds023118.mlab.com",23118)
+    handle = connection["users"]
+    handle.authenticate("admin","1234")
+    return handle
+
+
+
 app = Flask(__name__)
 CORS(app)
 login_manager = LoginManager()
 login_manager.init_app(app)
+handle = connect()
+
+
 #
 # @app.after_request
 # def after_request(response):
@@ -27,6 +46,7 @@ login_manager.init_app(app)
 #   response.headers.add('Access-Control-Allow-Headers', 'Content-Type,Authorization')
 #   response.headers.add('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE')
 #   return response
+
 
 
 class User(UserMixin):
@@ -73,7 +93,13 @@ def recieve(user):
 
 
     try:
-        return jsonify(json_data[user])
+        userinputs = [x for x in handle.mycollection.find()]
+        for item in userinputs:
+            print item
+            # print item.message + ' has database id ' + item._id
+        return str(userinputs)
+
+        # return jsonify(json_data[user])
         # @app.after_request
         # def after_request(response):
         #   response.headers.add('Access-Control-Allow-Origin', '*')
@@ -86,28 +112,24 @@ def recieve(user):
         return jsonify({'status':'Error','msg':'An exception has occured !! - ' + e.message})
 
 
-@app.route('/api/post/', methods=['GET','POST'])
-def send():
+@app.route('/api/post/<text>', methods=['GET','POST'])
+def send(text):
     global json_data
-    # print json_data
-    # print request.form
-    # print '----------------'
-    # print 'faltu'
-    # print '----------------'
+    userinput = text
+    oid = handle.mycollection.insert({"message":userinput})
+    return redirect ("/data")
     if request.method == 'POST':
-        tempdata = json.loads(request.data)
-        # print tempdata
+        pass
+        # tempdata = json.loads(request.data)
+        # # print tempdata
+        # # print json_data
+        # if tempdata['userid'] not in json_data:
+        #     print 'error'
+        #     return jsonify({'status':'Error','msg':'That username does not exist !!'})
+        # json_data[tempdata['userid']] = {'post4':tempdata}
+        #
         # print json_data
-        if tempdata['userid'] not in json_data:
-            print 'error'
-            return jsonify({'status':'Error','msg':'That username does not exist !!'})
-        json_data[tempdata['userid']] = {'post4':tempdata}
-        # json.dump(json_data[tempdata['userid']],{'post4':tempdata})
-        # print '----------------'
-        # print 'POST !!!!!!!!!!!!!!!'
-        # print '----------------'
-        print json_data
-        return jsonify({'status':'ok'})
+        # return jsonify({'status':'ok'})
     else:
         pass
     @app.after_request
