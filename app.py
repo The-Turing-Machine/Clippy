@@ -89,30 +89,41 @@ def status():
     #can be used to check login status
     return jsonify({'status':'ok'})
 
+#----------------------------------------------------------------------------------------------------
+
+
+
+# endpoint for retriving user data from db
+#----------------------------------------------------------------------------------------------------
 @app.route("/api/get/<user>/" , methods=['GET'])
 def recieve(user):
-    #retrive specific user data from cloud mongodb database
+    #retrive specific user data from cloud db
     global json_data
 
     try:
-        userinputs = [x for x in db.collection.find()]
-        for item in userinputs:
-            print item
-            # print item.message + ' has database id ' + item._id
-        return str(userinputs)
-    except KeyError:
-        return jsonify({'status':'Error','msg':'That username does not exist !!'})
+
+        if db.collection.find({"user": user}).limit(1).count() == 0:
+            #user does not exist
+            return jsonify({'status':'Error','msg':'That username does not exist !!'})
+
+        else:
+            #return user's data
+            return jsonify({
+                'user' : db.collection.find({"user": user})[0]['user'],
+                'data' : db.collection.find({"user": user})[0]['data']
+            })
+
     except Exception as e:
         return jsonify({'status':'Error','msg':'An exception has occured !! - ' + e.message})
 #----------------------------------------------------------------------------------------------------
 
-# endpoint for recieving data
+
+
+# endpoint for storing user data in db
 #----------------------------------------------------------------------------------------------------
 @app.route('/api/post/', methods=['POST'])
 def send():
     #send data to cloud db for storage
-    global json_data
-
     try:
         if request.method == 'POST':
             tempdata = json.loads(request.data)
@@ -152,9 +163,7 @@ def send():
       response.headers.add('Access-Control-Allow-Headers', 'Content-Type,Authorization')
       response.headers.add('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE')
       return response
-
-
-
+#----------------------------------------------------------------------------------------------------
 
 
 
