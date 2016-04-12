@@ -36,7 +36,7 @@ app = Flask(__name__)
 CORS(app)
 login_manager = LoginManager()
 login_manager.init_app(app)
-handle = connect()
+db = connect()
 
 
 #
@@ -80,58 +80,72 @@ def load_user(request):
 
 @app.route("/")
 def hello():
+    #can be used to check connection status with api
     return jsonify({'status':'ok'})
 
 @app.route("/api/")
 @login_required
 def status():
+    #can be used to check login status
     return jsonify({'status':'ok'})
 
 @app.route("/api/get/<user>/" , methods=['GET'])
 def recieve(user):
+    #retrive specific user data from cloud mongodb database
     global json_data
 
-
     try:
-        userinputs = [x for x in handle.mycollection.find()]
+        userinputs = [x for x in db.collection.find()]
         for item in userinputs:
             print item
             # print item.message + ' has database id ' + item._id
         return str(userinputs)
-
-        # return jsonify(json_data[user])
-        # @app.after_request
-        # def after_request(response):
-        #   response.headers.add('Access-Control-Allow-Origin', '*')
-        #   response.headers.add('Access-Control-Allow-Headers', 'Content-Type,Authorization')
-        #   response.headers.add('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE')
-        #   return response
     except KeyError:
         return jsonify({'status':'Error','msg':'That username does not exist !!'})
     except Exception as e:
         return jsonify({'status':'Error','msg':'An exception has occured !! - ' + e.message})
+#----------------------------------------------------------------------------------------------------
 
-
-@app.route('/api/post/<text>', methods=['GET','POST'])
-def send(text):
+# endpoint for recieving data
+#----------------------------------------------------------------------------------------------------
+@app.route('/api/post/', methods=['POST'])
+def send():
+    #send data to cloud db for storage
     global json_data
-    userinput = text
-    oid = handle.mycollection.insert({"message":userinput})
-    return redirect ("/data")
-    if request.method == 'POST':
-        pass
-        # tempdata = json.loads(request.data)
-        # # print tempdata
-        # # print json_data
-        # if tempdata['userid'] not in json_data:
-        #     print 'error'
-        #     return jsonify({'status':'Error','msg':'That username does not exist !!'})
-        # json_data[tempdata['userid']] = {'post4':tempdata}
-        #
-        # print json_data
-        # return jsonify({'status':'ok'})
-    else:
-        pass
+
+    try:
+        if request.method == 'POST':
+            tempdata = json.loads(request.data)
+
+            #check if user exist in database
+            if db.collection.find({"user": tempdata['user']}).limit(1).count() == 0:
+                #user does not exist, create one
+                db.collection.insert(tempdata)
+                return jsonify({'status':'success','msg':'created-user'})
+
+            else:
+                #user exists , add each item in new list to orignal list, ignore duplicates
+                db.collection.update(
+                    {"user": tempdata['user']},
+                    {
+                        "$addToSet":
+                        {
+                            "data":
+                            {
+                                "$each": tempdata['data']
+                            }
+                        }
+                    }
+                )
+                return jsonify({'status':'success','msg':'updated-user'})
+
+        else:
+            return jsonify({'status':'Error','msg':'That method is not allowed !!'})
+
+    except Exception as e:
+        return jsonify({'status':'Error','msg':'An exception has occured !! - ' + e.message})
+
+
     @app.after_request
     def after_request(response):
       response.headers.add('Access-Control-Allow-Origin', '*')
@@ -139,6 +153,12 @@ def send(text):
       response.headers.add('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE')
       return response
 
+
+
+
+
+
+#----------------------------------------------------------------------------------------------------
 if __name__ == "__main__":
     global json_data
     app.config["SECRET_KEY"] = "SuperDuperSecretKey!"
