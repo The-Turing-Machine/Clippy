@@ -8,9 +8,6 @@ from flask.ext.cors import CORS
 
 from pymongo import MongoClient
 
-
-json_data = {}
-
 from OpenSSL import SSL
 
 # from werkzeug.serving import make_ssl_devcert
@@ -27,7 +24,7 @@ def connect():
     # Temporary !!
     connection = MongoClient("ds023118.mlab.com",23118)
     handle = connection["users"]
-    handle.authenticate("admin","1234")
+    handle.authenticate("admin","1234")# .......
     return handle
 
 
@@ -39,18 +36,9 @@ login_manager.init_app(app)
 db = connect()
 
 
-#
-# @app.after_request
-# def after_request(response):
-#   response.headers.add('Access-Control-Allow-Origin', '*')
-#   response.headers.add('Access-Control-Allow-Headers', 'Content-Type,Authorization')
-#   response.headers.add('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE')
-#   return response
-
-
 
 class User(UserMixin):
-    # user_database = json_data
+    #edit this
     user_database = {"admin": ("admin", "1234"),"user1": ("user1", "abcd")}
     def __init__(self, username, password):
         self.id = username
@@ -98,7 +86,6 @@ def status():
 @app.route("/api/get/<user>/" , methods=['GET'])
 def recieve(user):
     #retrive specific user data from cloud db
-    global json_data
 
     try:
 
@@ -171,8 +158,5 @@ def send():
 if __name__ == "__main__":
     global json_data
     app.config["SECRET_KEY"] = "SuperDuperSecretKey!"
-    with open("data/database.json") as json_file:
-        json_data = json.load(json_file)
-
     port = int(os.environ.get('PORT', 5000))
     app.run(debug=True,port=port,host='0.0.0.0',ssl_context=('key.crt','key.key'))
