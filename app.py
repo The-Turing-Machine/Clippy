@@ -74,7 +74,6 @@ def load_user(request):
         user_entry = User.get(username)
         if (user_entry is not None):
             user = User(user_entry['user'])
-            # if (user.password_hash == password):
             if bcrypt.check_password_hash(user.password_hash, password) == True:
                 return user
     return None
@@ -151,6 +150,41 @@ def send():
       response.headers.add('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE')
       return response
 #----------------------------------------------------------------------------------------------------
+
+
+#----------------------------------------------------------------------------------------------------
+@app.route('/api/create-user/', methods=['GET','POST'])
+def create():
+    try:
+        if request.method == 'POST':
+            tempdata = json.loads(request.data)
+            if db.collection.find({"user": tempdata['user']}).limit(1).count() != 0:
+                #user already exists
+                return jsonify({'status':'Error','msg':'That user already exists !!'})
+            else:
+                db.collection.insert(
+                    {
+                        'user':tempdata['user'],
+                        'password': bcrypt.generate_password_hash(tempdata['password'],12),
+                        'data':[]
+                    }
+                )
+                return jsonify({'status':'success','msg':'created-user'})
+
+        else:
+            return jsonify({'status':'Error','msg':'That method is not allowed !!'})
+    except Exception as e:
+        return jsonify({'status':'Error','msg':'An exception has occured !! - ' + e.message})
+
+    @app.after_request
+    def after_request(response):
+      response.headers.add('Access-Control-Allow-Origin', '*')
+      response.headers.add('Access-Control-Allow-Headers', 'Content-Type,Authorization')
+      response.headers.add('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE')
+      return response
+#----------------------------------------------------------------------------------------------------
+
+
 
 
 #main function
