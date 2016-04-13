@@ -6,6 +6,7 @@ import os
 from flask.ext.cors import CORS
 from pymongo import MongoClient
 from OpenSSL import SSL
+from flask.ext.bcrypt import Bcrypt
 
 
 def connect():
@@ -17,9 +18,16 @@ def connect():
 
 app = Flask(__name__)
 CORS(app)
+bcrypt = Bcrypt(app)
 login_manager = LoginManager()
 login_manager.init_app(app)
 db = connect()
+
+app.config.update(
+    DEBUG=True,
+    SECRET_KEY='SuperDuperSecretKey!',
+    BCRYPT_LOG_ROUNDS = 12
+)
 
 # user class
 #----------------------------------------------------------------------------------------------------
@@ -27,7 +35,7 @@ class User(UserMixin):
     def __init__(self, username):
         data = db.collection.find({"user": username})[0]
         self.user = data['user']
-        self.password = data['password']
+        self.password_hash = data['password']
         self.data = data['data']
 
     def update(self,tempdata):
@@ -66,7 +74,8 @@ def load_user(request):
         user_entry = User.get(username)
         if (user_entry is not None):
             user = User(user_entry['user'])
-            if (user.password == password):
+            # if (user.password_hash == password):
+            if bcrypt.check_password_hash(user.password_hash, password) == True:
                 return user
     return None
 #----------------------------------------------------------------------------------------------------
@@ -147,6 +156,6 @@ def send():
 #main function
 #----------------------------------------------------------------------------------------------------
 if __name__ == "__main__":
-    app.config["SECRET_KEY"] = "SuperDuperSecretKey!"
+    # app.config["SECRET_KEY"] = "SuperDuperSecretKey!"
     port = int(os.environ.get('PORT', 5000))
     app.run(debug=True,port=port,host='0.0.0.0',ssl_context=('key.crt','key.key'))
